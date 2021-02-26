@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Animal Feed Calculator</string>
+    <string name="feed_calculator">Feed Calculator</string>
+    <string name="calculate_diet">Calculate Diet</string>
+    <string name="please_select_the_feed_s_you_have_in_you_farm_below">please select the feed(s) you have in you farm Below</string>
+</resources>
