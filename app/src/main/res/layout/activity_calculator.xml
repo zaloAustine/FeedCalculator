@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CalculatorActivity">
+
+    <LinearLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -17,33 +30,41 @@
         app:title="Animal Feeds"
         app:titleTextColor="@color/white" />
 
-    <TextView
-        android:id="@+id/textView"
+    <LinearLayout
+        android:id="@+id/layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:text="@string/please_select_the_feed_s_you_have_in_you_farm_below"
-        android:textColor="@color/black"
-        android:textSize="20sp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-    <TextView
-        android:id="@+id/items"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="12dp"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <TextView
+            android:id="@+id/pageDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:text="@string/please_select_the_feed_s_you_have_in_you_farm_below"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+
+        <TextView
+            android:id="@+id/items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="12dp"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -53,7 +74,7 @@
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/items" />
+        app:layout_constraintTop_toBottomOf="@+id/layout" />
 
     <Button
         android:id="@+id/button"

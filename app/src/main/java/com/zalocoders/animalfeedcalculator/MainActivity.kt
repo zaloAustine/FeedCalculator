@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         next.setOnClickListener {
             if (kgs.text.toString() != "") {
                 val intent = Intent(this, CalculatorActivity::class.java)
-                intent.putExtra("KGS", kgs.text)
+                intent.putExtra("KGS", kgs.text.toString())
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "please Enter KG(s)", Toast.LENGTH_LONG).show()

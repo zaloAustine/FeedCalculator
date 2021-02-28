@@ -26,6 +26,7 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="30sp"
+        android:fontFamily="@font/roboto_mono_light"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,13 +54,15 @@
                 android:layout_height="wrap_content"
                 android:text="Enter amount of feed you want to achive in kg(s) ie 400"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:fontFamily="@font/roboto_mono_light"
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/kgs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="kgs"
+                android:fontFamily="@font/roboto_mono_light"
                 android:inputType="number" />
 
             <Button
@@ -67,6 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Next"
+                android:fontFamily="@font/roboto_mono_light"
                 android:textAllCaps="false"
                 android:textColor="@color/white" />
 

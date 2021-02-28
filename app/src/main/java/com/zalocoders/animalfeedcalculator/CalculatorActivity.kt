@@ -1,19 +1,22 @@
 package com.zalocoders.animalfeedcalculator
 
-import android.app.ActionBar
-import android.graphics.Color
+import android.app.ProgressDialog
+import android.content.Context
 import android.os.Bundle
-import android.util.TypedValue
+import android.os.Handler
 import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 class CalculatorActivity : AppCompatActivity() {
     var feedList: MutableList<Feed>? = null
@@ -21,23 +24,32 @@ class CalculatorActivity : AppCompatActivity() {
     var kgs: Int = 0
     var stringBuilder: StringBuilder? = null
     lateinit var button: Button
-    var mBuilder: AlertDialog.Builder? = null
+    lateinit var recyclerView: RecyclerView
+    lateinit var items: TextView
+    lateinit var pageDesc: TextView
+    lateinit var container: IntArray
+    lateinit var progressDialog: ProgressDialog
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calculator)
 
-        kgs = intent.extras?.getInt("KGS")!!
+        kgs = intent.getStringExtra("KGS")?.toInt()!!
         stringBuilder = StringBuilder()
 
+        progressDialog = ProgressDialog(this)
+        progressDialog.setMessage("Please wait while we balance your feeds....")
+
+        items = findViewById(R.id.items)
+        pageDesc = findViewById(R.id.pageDesc)
 
         button = findViewById(R.id.button)
         button.setOnClickListener {
 
-            if (mBuilder != null) {
-                mBuilder?.show()
+            feedSelected?.size?.let { it1 -> divider(kgs, it1) }
 
-            }
+            calculate()
         }
 
         feedList = mutableListOf()
@@ -61,10 +73,11 @@ class CalculatorActivity : AppCompatActivity() {
                     stringBuilder?.append("${feed.name} Protein ${feed.CP} Minerals${feed.MN} ${feed.cost}ksh Per (kg)\n")
                 }
 
-                calculate()
+                items.text = stringBuilder.toString()
             }
         }
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+
+        recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             itemAnimator = DefaultItemAnimator()
@@ -99,45 +112,62 @@ class CalculatorActivity : AppCompatActivity() {
         feedList?.add(feed15)
     }
 
-    fun calculate() {
+    private fun calculate() {
 
-        val mDialogView = LayoutInflater.from(this).inflate(R.layout.result_dialog, null)
-        mBuilder = AlertDialog.Builder(this)
-            .setView(mDialogView)
-            .setTitle("Results")
+        progressDialog.show()
+        Handler().postDelayed(Runnable {
+            progressDialog.dismiss()
+            Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show()
 
-        val linearLayout = mDialogView.findViewById<LinearLayout>(R.id.mainLayout)
+        }, 3000)
 
-        feedSelected?.forEach { feed ->
-            createViews(linearLayout, feed)
-        }
+        val linearLayout = findViewById<LinearLayout>(R.id.mainLayout)
+        linearLayout.visibility = View.VISIBLE
+        recyclerView.visibility = View.GONE
+        button.visibility = View.GONE
+        items.visibility = View.GONE
+        pageDesc.text =
+            "Mix the following feeds in the given ratios  to achieve $kgs kg(s) Balanced Mixture"
+        linearLayout.addView(createViews())
     }
 
-    private fun createViews(linearLayout: LinearLayout, feed: Feed) {
+    private fun createViews(): LinearLayout {
 
-        linearLayout.removeAllViews()
-
-        val nameText = TextView(this).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ActionBar.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-
-            text = feed.name
+        val ll = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
         }
 
-        val kgs = TextView(this).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ActionBar.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-            this.setTextColor(Color.BLACK)
-            this.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18F)
+        var count = 0
+        feedSelected?.forEach { feed ->
 
-            text = "34 kg"
+            val inflater =
+                getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val rowView: View = inflater.inflate(R.layout.result_view, null, false)
+            rowView.id = count
+
+
+            val kgs = rowView.findViewById<TextView>(R.id.kgs)
+            val name = rowView.findViewById<TextView>(R.id.name)
+
+            kgs.text = "${container[count]} kgs "
+
+            name.text = "${feed.name}"
+
+            ll.addView(rowView)
+
+            count++
         }
+        return ll
+    }
 
-        linearLayout.addView(nameText)
-        linearLayout.addView(kgs)
+    fun divider(number: Int, divisions: Int) {
+        var number = number
+        val rand = Random()
+        container = IntArray(divisions)
+        print("$number->")
+        while (number > 0) {
+            container[rand.nextInt(divisions)]++
+            number--
+        }
     }
 }
