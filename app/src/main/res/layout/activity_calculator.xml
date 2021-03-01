@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -39,7 +38,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-
         <TextView
             android:id="@+id/pageDesc"
             android:layout_width="match_parent"
@@ -47,10 +45,10 @@
             android:layout_margin="12dp"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
+            android:fontFamily="@font/roboto_mono_light"
             android:text="@string/please_select_the_feed_s_you_have_in_you_farm_below"
             android:textColor="@color/black"
-            android:textSize="20sp" />
-
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/items"
@@ -60,10 +58,9 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="48dp"
             android:layout_marginEnd="12dp"
+            android:fontFamily="@font/roboto_mono_light"
             android:textColor="@color/black"
             android:textSize="12sp" />
-
-
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -81,6 +78,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
+        android:fontFamily="@font/roboto_mono_light"
         android:text="@string/calculate_diet"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
